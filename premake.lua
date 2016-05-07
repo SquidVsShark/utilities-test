@@ -9,7 +9,7 @@ solution "Utilities Test"
       includedirs { "../utilities/", "./" }
       
       buildoptions {
-        "-std=c++11"
+        "-std=c++14"
       }
 
       configuration "Debug"
