@@ -23,6 +23,10 @@ TEST_CASE("Memory Pool")
 
     REQUIRE(chunk.chunk_start != nullptr);
     REQUIRE(chunk.bytes_in_chunk == 512);
+  
+    util::memory_chunk chunk_with_name = util::memory_pool_get_chunk(&pool, 64, "foo");
+
+    REQUIRE(!strcmp(chunk_with_name.name, "foo"));
   }
 
   
@@ -47,11 +51,25 @@ TEST_CASE("Memory Pool")
   }
 
 
+  SECTION("Index and count")
+  {
+    REQUIRE(util::memory_pool_get_number_of_chunks(&pool) == 1);
+
+    util::memory_chunk chunk = util::memory_pool_get_chunk(&pool, 512, "bar");
+
+    REQUIRE(util::memory_pool_get_number_of_chunks(&pool) == 2);
+ 
+    util::memory_chunk by_index = util::memory_pool_get_chunk(&pool, 0);
+
+    REQUIRE(!strcmp(by_index.name, "bar")); 
+  }
+
+
   SECTION("Run through")
   {
     util::memory_chunk chunk_01 = util::memory_pool_get_chunk(&pool, 64);
     util::memory_chunk chunk_02 = util::memory_pool_get_chunk(&pool, 512);
-    util::memory_chunk chunk_03 = util::memory_pool_get_chunk(&pool, 1024);
+    util::memory_chunk chunk_03 = util::memory_pool_get_chunk(&pool, 512);
     util::memory_chunk chunk_04 = util::memory_pool_get_chunk(&pool, 32);
 
     util::memory_pool_return_chunk(&pool, &chunk_03);
