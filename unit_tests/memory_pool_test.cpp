@@ -67,6 +67,25 @@ TEST_CASE("Memory Pool")
   }
 
 
+  SECTION("Memory corruption")
+  {
+    util::memory_chunk chunk_a = util::memory_pool_get_chunk(&pool, 64, "bar");
+    util::memory_chunk chunk_b = util::memory_pool_get_chunk(&pool, 64, "foo");
+    util::memory_chunk chunk_c = util::memory_pool_get_chunk(&pool, 512, "boo");
+
+    uint32_t size = sizeof(util::detail::memory_chunk_header);
+
+    // If this memset wipes out the name of the next chunk we have an issue.
+    memset(chunk_a.chunk_start, 1, 64);
+    memset(chunk_b.chunk_start, 1, 64);
+    memset(chunk_c.chunk_start, 1, 512);
+
+    util::memory_chunk chunk_end = util::memory_pool_get_chunk_by_index(&pool, 3);
+
+    REQUIRE(!strcmp(chunk_end.name, "none")); 
+  }
+
+
   SECTION("Run through")
   {
     util::memory_chunk chunk_01 = util::memory_pool_get_chunk(&pool, 64);
