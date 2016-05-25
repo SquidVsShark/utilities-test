@@ -59,9 +59,11 @@ TEST_CASE("Memory Pool")
 
     REQUIRE(util::memory_pool_get_number_of_chunks(&pool) == 2);
  
-    util::memory_chunk by_index = util::memory_pool_get_chunk(&pool, 0);
+    util::memory_chunk by_index_1 = util::memory_pool_get_chunk_by_index(&pool, 0);
+    util::memory_chunk by_index_2 = util::memory_pool_get_chunk_by_index(&pool, 1);
 
-    REQUIRE(!strcmp(by_index.name, "bar")); 
+    REQUIRE(!strcmp(by_index_1.name, "bar"));
+    REQUIRE(!strcmp(by_index_2.name, "none"));
   }
 
 
