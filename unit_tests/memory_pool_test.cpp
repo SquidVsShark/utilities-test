@@ -69,18 +69,22 @@ TEST_CASE("Memory Pool")
 
   SECTION("Memory corruption")
   {
-    util::memory_chunk chunk_a = util::memory_pool_get_chunk(&pool, 64, "bar");
-    util::memory_chunk chunk_b = util::memory_pool_get_chunk(&pool, 64, "foo");
-    util::memory_chunk chunk_c = util::memory_pool_get_chunk(&pool, 512, "boo");
+    constexpr size_t initial_alloc = 1 << 22;
 
+    util::memory_pool big_pool = util::memory_pool_create(initial_alloc);
+
+    constexpr size_t chunk_reserve_1 = 1 << 3;
+    util::memory_chunk chunk_a = util::memory_pool_get_chunk(&big_pool, chunk_reserve_1, "bar");
+    memset(chunk_a.chunk_start, 0, chunk_reserve_1);
+    
+    constexpr size_t chunk_reserve_2 = 1 << 17;
+    util::memory_chunk chunk_b = util::memory_pool_get_chunk(&big_pool, chunk_reserve_2, "foo");
+    memset(chunk_b.chunk_start, 0, chunk_reserve_2);
+    
     uint32_t size = sizeof(util::detail::memory_chunk_header);
 
-    // If this memset wipes out the name of the next chunk we have an issue.
-    memset(chunk_a.chunk_start, 1, 64);
-    memset(chunk_b.chunk_start, 1, 64);
-    memset(chunk_c.chunk_start, 1, 512);
-
-    util::memory_chunk chunk_end = util::memory_pool_get_chunk_by_index(&pool, 3);
+    const size_t no_of_chunks = util::memory_pool_get_number_of_chunks(&big_pool);
+    const util::memory_chunk chunk_end = util::memory_pool_get_chunk_by_index(&big_pool, no_of_chunks - 1);
 
     REQUIRE(!strcmp(chunk_end.name, "none")); 
   }
