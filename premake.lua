@@ -5,7 +5,21 @@ solution "Utilities Test"
    project "Unit"
       kind "ConsoleApp"
       language "C++"
-      files { "**.h", "**.c", "**.hpp", "**.cpp", "../utilities/**.cpp", "../utilities/**.hpp"}
+      
+      files {
+        "**.h",
+        "**.c",
+        "**.hpp",
+        "**.cpp",
+        "../utilities/**.cpp",
+        "../utilities/**.hpp"
+      }
+
+      excludes {
+        "../utilities/utilities/logging**", -- logging has dep on directory.
+        "../utilities/utilities/directory**", -- can't test through CI.
+      }
+      
       includedirs { "../utilities/", "./" }
       
       buildoptions {

@@ -42,7 +42,7 @@ TEST_CASE("Generic ID")
     const util::generic_id id_to_find = util::generic_id_init(ids.size() / 2);
     size_t index;
 
-    REQUIRE(util::generic_id_search_linearly(&index, id_to_find, ids.data(), ids.size()));
+    REQUIRE(util::generic_id_search_linear(&index, id_to_find, ids.data(), ids.size()));
     REQUIRE(index == ids.size() / 2);
   }
 
