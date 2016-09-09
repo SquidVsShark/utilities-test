@@ -1,5 +1,6 @@
 #include <catch/catch.hpp>
 #include <utilities/memory_pool.hpp>
+#include <cstring>
 
 
 TEST_CASE("Memory Pool")
