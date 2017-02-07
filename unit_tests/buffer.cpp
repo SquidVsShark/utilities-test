@@ -1,6 +1,4 @@
 #include <catch/catch.hpp>
-
-#define UTIL_BUFFER_IMPL
 #include <utilities/buffer.hpp>
 
 

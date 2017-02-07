@@ -1,5 +1,4 @@
 #include <catch/catch.hpp>
-#include <utilities/impl.hpp>
 #include <utilities/convert.hpp>
 
 
