@@ -5,6 +5,6 @@
 TEST_CASE("Dir Test")
 {
   // Hard to test this other than make sure it returns something.
-  REQUIRE(strlen(util::dir::exe_path()) > 0);
-  // printf("Dir: %s\n", util::dir::exe_path());
+  REQUIRE(strlen(lib::dir::exe_path()) > 0);
+  // printf("Dir: %s\n", lib::dir::exe_path());
 }

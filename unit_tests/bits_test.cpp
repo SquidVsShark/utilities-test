@@ -17,9 +17,9 @@ TEST_CASE("Bits")
   {
     const uint32_t u32_a = 1234;
     const uint32_t u32_b = 5678;
-    const uint64_t pack = util::bits::pack(u32_a, u32_b);
+    const uint64_t pack = lib::bits::pack3232(u32_a, u32_b);
 
-    REQUIRE(util::bits::lower(pack) == u32_a);
-    REQUIRE(util::bits::upper(pack) == u32_b);
+    REQUIRE(lib::bits::lower32(pack) == u32_a);
+    REQUIRE(lib::bits::upper32(pack) == u32_b);
   }
 }

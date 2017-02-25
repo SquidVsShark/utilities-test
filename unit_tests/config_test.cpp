@@ -8,19 +8,19 @@ TEST_CASE("Config")
   {
     uint32_t count = 0;
 
-    if(util::platform::is_mac_platform())
+    if(lib::platform::is_mac_platform())
     {
       ++count;
-      REQUIRE(util::platform::is_nix_platform());
+      REQUIRE(lib::platform::is_nix_platform());
     }
 
-    if(util::platform::is_linux_platform())
+    if(lib::platform::is_linux_platform())
     {
       ++count;
-      REQUIRE(util::platform::is_nix_platform());
+      REQUIRE(lib::platform::is_nix_platform());
     }
 
-    if(util::platform::is_windows_platform()) { ++count; }
+    if(lib::platform::is_windows_platform()) { ++count; }
 
     REQUIRE(count == 1);
   }
@@ -29,9 +29,9 @@ TEST_CASE("Config")
   {
     uint32_t count = 0;
 
-    if(util::platform::is_clang_compiler()) { ++count; }
-    if(util::platform::is_gcc_compiler())   { ++count; }
-    if(util::platform::is_msvs_compiler())  { ++count; }
+    if(lib::platform::is_clang_compiler()) { ++count; }
+    if(lib::platform::is_gcc_compiler())   { ++count; }
+    if(lib::platform::is_msvs_compiler())  { ++count; }
 
     REQUIRE(count == 1);
   }
