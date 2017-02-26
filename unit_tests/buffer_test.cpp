@@ -83,6 +83,11 @@ TEST_CASE("Buffer")
       array[i] = i;
     }
 
+    for(uint32_t i = 0; i < 32; ++i)
+    {
+      REQUIRE(i == array[i]);
+    }    
+
     lib::buffer::resize(&somebuffer, 64);
 
     REQUIRE(lib::buffer::capacity(&somebuffer) == 64);
