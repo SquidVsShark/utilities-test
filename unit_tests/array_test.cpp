@@ -123,7 +123,20 @@ TEST_CASE("Array Test")
     REQUIRE(int_array.capacity() == 3);
   }
 
-  SECTION("clear")
+  SECTION("Insert")
+  {
+    lib::array<int, 4> int_array {1,2,3,4};
+
+    int_array.erase(1);
+    int_array.insert(1, 2);
+
+    REQUIRE(int_array[0] == 1);
+    REQUIRE(int_array[1] == 2);
+    REQUIRE(int_array[2] == 3);
+    REQUIRE(int_array[3] == 4);
+  }
+
+  SECTION("Clear")
   {
     lib::array<int, 3> int_array {1,2,3};
     int_array.clear();
