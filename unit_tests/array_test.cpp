@@ -128,12 +128,22 @@ TEST_CASE("Array Test")
     lib::array<int, 4> int_array {1,2,3,4};
 
     int_array.erase(1);
-    int_array.insert(1, 2);
-
+    int* i = int_array.insert(1, 2);
+    REQUIRE(*i == 2);
     REQUIRE(int_array[0] == 1);
     REQUIRE(int_array[1] == 2);
     REQUIRE(int_array[2] == 3);
     REQUIRE(int_array[3] == 4);
+  }
+
+  SECTION("At")
+  {
+    lib::array<int, 3> int_array {1,2,3};
+
+    REQUIRE(int_array.at(0) == 1);
+    REQUIRE(int_array.at(1) == 2);
+    REQUIRE(int_array.at(2) == 3);
+    REQUIRE(int_array.at(3) == 3); // Should cap out at the top
   }
 
   SECTION("Clear")
