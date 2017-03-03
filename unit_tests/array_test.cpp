@@ -34,13 +34,17 @@ TEST_CASE("Array Test")
     int_array.push_back(1);
     REQUIRE(int_array[0] == 1);
     REQUIRE(int_array.size() == 1);
-    ;
-    int_array.push_back(2);
+
+    const int two = 2;
+
+    int_array.push_back(two);
     REQUIRE(int_array[0] == 1);
     REQUIRE(int_array[1] == 2);
     REQUIRE(int_array.size() == 2);
 
-    int_array.push_back(3);
+    int three = 3;
+
+    int_array.push_back(three);
     REQUIRE(int_array[0] == 1);
     REQUIRE(int_array[1] == 2);
     REQUIRE(int_array[2] == 3);
@@ -104,6 +108,28 @@ TEST_CASE("Array Test")
     foo_array.emplace_back(bar);
     REQUIRE(foo_array.size() == 3);
     REQUIRE(foo_array.capacity() == 3);
+  }
+
+  SECTION("Erase")
+  {
+    lib::array<int, 3> int_array {1,2,3};
+
+    int_array.erase(1);
+
+    REQUIRE(int_array[0] == 1);
+    REQUIRE(int_array[1] == 3);
+
+    REQUIRE(int_array.size() == 2);
+    REQUIRE(int_array.capacity() == 3);
+  }
+
+  SECTION("clear")
+  {
+    lib::array<int, 3> int_array {1,2,3};
+    int_array.clear();
+
+    REQUIRE(int_array.size() == 0);
+    REQUIRE(int_array.capacity() == 3);
   }
 
   SECTION("For loops")
