@@ -26,6 +26,20 @@ TEST_CASE("Array Test")
     REQUIRE(int_array[2] == 3);
   }
 
+  SECTION("Range CTOR")
+  {
+    int array[5] = {1,2,3,4,5};
+
+    lib::array<int, 3> from_c_arr(&array[0], &array[5]);
+    REQUIRE(from_c_arr.size() == 5);
+    REQUIRE(from_c_arr.capacity() == 5);
+
+    lib::array<int, 10> from_lib_arr(from_c_arr.begin(), from_c_arr.end());
+    REQUIRE(from_lib_arr.size() == 5);
+    REQUIRE(from_lib_arr.capacity() == 10);
+
+  }
+
   SECTION("Push back")
   {
     lib::array<int, 3> int_array;
