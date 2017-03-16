@@ -136,8 +136,52 @@ TEST_CASE("Array Test")
     REQUIRE(int_array.size() == 2);
     REQUIRE(int_array.capacity() == 3);
   }
+  
+  SECTION("Erase Range")
+  {
+    {
+      lib::array<int, 5> int_array {1,2,3,4,5};
+      
+      int_array.erase(1, 4);
+      
+      REQUIRE(int_array.size() == 1);
+      REQUIRE(int_array[0] == 1);
+    }
+    
+    {
+      lib::array<int, 5> int_array {1,2,3,4,5};
+      
+      int_array.erase(0, 4);
+      
+      REQUIRE(int_array.size() == 1);
+      REQUIRE(int_array[0] == 5);
+    }
+    
+    {
+      lib::array<int, 5> int_array {1,2,3,4,5};
+      
+      int_array.erase(1, 3);
+      
+      REQUIRE(int_array.size() == 2);
+      REQUIRE(int_array[0] == 1);
+      REQUIRE(int_array[1] == 5);
+    }
+    
+    {
+      lib::array<int, 5> int_array {1,2,3,4,5};
+      
+      int_array.erase(4, 1);
+      
+      REQUIRE(int_array.size() == 4);
+      REQUIRE(int_array[0] == 1);
+      REQUIRE(int_array[1] == 2);
+      REQUIRE(int_array[2] == 3);
+      REQUIRE(int_array[3] == 4);
+    }
+    
+  }
 
-  SECTION("Insert")
+  SECTION("Insert Single")
   {
     lib::array<int, 4> int_array {1,2,3,4};
 
@@ -148,6 +192,52 @@ TEST_CASE("Array Test")
     REQUIRE(int_array[1] == 2);
     REQUIRE(int_array[2] == 3);
     REQUIRE(int_array[3] == 4);
+    
+    REQUIRE(int_array.size() == 4);
+    REQUIRE(int_array.capacity() == 4);
+  }
+  
+  SECTION("Insert Range")
+  {
+    // Insert to front.
+    {
+      lib::array<int, 4> int_array_1 {1,2,3,4};
+      lib::array<int, 4> int_array_2 {5,6,7,8};
+      
+      int_array_2.insert(0, &int_array_1[0], int_array_1.size());
+      
+      REQUIRE(int_array_2.capacity() == 8);
+      REQUIRE(int_array_2.size() == 8);
+      
+      REQUIRE(int_array_2[0] == 1);
+      REQUIRE(int_array_2[1] == 2);
+      REQUIRE(int_array_2[2] == 3);
+      REQUIRE(int_array_2[3] == 4);
+      REQUIRE(int_array_2[4] == 5);
+      REQUIRE(int_array_2[5] == 6);
+      REQUIRE(int_array_2[6] == 7);
+      REQUIRE(int_array_2[7] == 8);
+    }
+    
+    // Insert to end.
+    {
+      lib::array<int, 4> int_array_1 {1,2,3,4};
+      lib::array<int, 4> int_array_2 {5,6,7,8};
+      
+      int_array_2.insert(4, &int_array_1[0], int_array_1.size());
+      
+      REQUIRE(int_array_2.capacity() == 8);
+      REQUIRE(int_array_2.size() == 8);
+      
+      REQUIRE(int_array_2[0] == 5);
+      REQUIRE(int_array_2[1] == 6);
+      REQUIRE(int_array_2[2] == 7);
+      REQUIRE(int_array_2[3] == 8);
+      REQUIRE(int_array_2[4] == 1);
+      REQUIRE(int_array_2[5] == 2);
+      REQUIRE(int_array_2[6] == 3);
+      REQUIRE(int_array_2[7] == 4);
+    }
   }
 
   SECTION("At")
