@@ -14,19 +14,9 @@ table.insert(
     no_link  = true,
 
     src_files = {
-      -- Headers
-      make.get_proj_root() .. "**.hpp",
-      make.get_proj_root() .. "**.h",
-
-      -- Source
-      make.get_proj_root() .. "**.c",
-      make.get_proj_root() .. "**.cpp",
-      make.get_proj_root() .. "**.mm",
-      make.get_proj_root() .. "**.m",
-
-      -- Doc
-      make.get_proj_root() .. "**.md",
-      make.get_proj_root() .. "**.txt",
+      make.add_headers(make.get_proj_root()),
+      make.add_src(make.get_proj_root()),
+      make.add_doc(make.get_proj_root()),
     },
 
     inc_dirs = {
